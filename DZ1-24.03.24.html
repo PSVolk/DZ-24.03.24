@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <title>Request</title>
+
+</head>
+<body>
+<form id="form" action="" onsubmit="return send_req()">
+Название фильма:<br>
+ <input type="text" name="s" id="filmname" value="Mickey" >
+  <br>
+  Категория:<br>
+  <select id="filmcategory" name="type">
+  <option value="movie">movie</option>
+  <option value="series">series</option>
+  <option value="episode">episode</option>
+</select>
+ 
+ <br>
+ <input type="submit" id="submit-btn" onsubmit="send_req()">
+</form>
+
+ <script>
+ document.getElementById("form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  var formData = new FormData(form);
+  // output as an object
+  console.log(Object.fromEntries(formData));
+
+  // ...or iterate through the name-value pairs
+  for (var pair of formData.entries()) {
+    console.log(pair[0] + ": " + pair[1]);
+  }
+  let key = "3d486b68";
+  let data = "?apikey=" + key;
+data  += "&s=";
+data  += Object.fromEntries(formData).s;
+data  += "&type=";
+data  += Object.fromEntries(formData).type;
+  
+   let request;
+if(window.XMLHttpRequest){
+ request = new XMLHttpRequest();
+}
+else{
+ request = new ActiveXObject("Microsoft.XMLHTTP");
+}
+request.open("GET", 
+ "https://www.omdbapi.com/"+data);
+request.onload = function(){
+ if(request.status === 200){
+ alert(request.response);
+ }
+}
+request.send();
+});
+ let subbliBtn = document.getElementById("submit-btn");
+  function send_req() {
+ let nameValue = document.getElementById("filmname").
+ value;
+ let key = "3d486b68";
+let categoryValue = document.getElementById("filmcategory").
+ value;
+ 
+
+}
+ </script>
+</body>
+</html>
